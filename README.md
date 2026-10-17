@@ -222,49 +222,10 @@ src/
 - Docker (for pgvector)
 - A Google Gemini API key from Google AI Studio
 
-### 1. Start PostgreSQL with pgvector
-
-```bash
-docker run -d --name sosdb -p 5432:5432 \
-  -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=sos \
-  pgvector/pgvector:pg16
-```
-
-### 2. Set environment variables and properties
-
-```bash
-# Linux / macOS
-export GEMINI_API_KEY=your_key_here
 
 # Windows PowerShell
 $env:GEMINI_API_KEY="your_key_here"
 ```
-
-Never commit real keys or passwords. Add these to `application.properties` (placeholders shown):
-
-```properties
-# Main DB (MySQL)
-spring.datasource.url=jdbc:mysql://localhost:3306/your_db
-spring.datasource.username=...
-spring.datasource.password=...
-
-# pgvector DB (PostgreSQL)
-pgvector.datasource.url=jdbc:postgresql://localhost:5432/sos
-pgvector.datasource.username=postgres
-pgvector.datasource.password=pass
-
-# Gemini
-spring.ai.google.genai.api-key=${GEMINI_API_KEY}
-spring.ai.google.genai.chat.options.model=gemini-2.5-flash
-spring.ai.google.genai.embedding.api-key=${GEMINI_API_KEY}
-spring.ai.google.genai.embedding.text.options.model=gemini-embedding-001
-spring.ai.google.genai.embedding.text.options.dimensions=768
-
-# Must equal the embedding dimensions above
-spring.ai.vectorstore.pgvector.dimensions=768
-area.risk.gemini.timeout-seconds=15
-```
-
 Property and model names can change between Spring AI versions, so check the Spring AI docs and Google's current model list.
 
 ### 3. Backend
